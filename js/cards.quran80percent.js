@@ -1,5 +1,5 @@
 (function(window, $) {
-	window.registerCardSet('quran80percent', new StaticCards({
+	window.FlashCards.registerCardSet('quran80percent', new StaticCards({
     "هذَا" : "this",
     "ذالِكَ" : "that",
     "هذِهِ" : "this; these",
@@ -398,5 +398,4 @@
     "عَالَم" : "world",
     "عَالَمِين" : "worlds, universe",
   }));
-	window.selectCardSet('quran80percent');
 }(window, jQuery));

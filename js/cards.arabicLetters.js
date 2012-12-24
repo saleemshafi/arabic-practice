@@ -64,13 +64,13 @@
 			if (isFirst) {
 				approVowels = [this.FATHA, this.KASRA, this.DAMMA];
 			} else if (isLast) {
-				approVowels = removeFrom(this.vowels, this.SUKOON);
+				approVowels = window.FlashCards.removeFrom(this.vowels, this.SUKOON);
 			} else {
-				approVowels = removeFrom(this.vowels, [this.FATHATAAN, this.KASRATAAN, this.DAMMATAAN]);
+				approVowels = window.FlashCards.removeFrom(this.vowels, [this.FATHATAAN, this.KASRATAAN, this.DAMMATAAN]);
 			}
-			var vowel = randomOneFrom(approVowels);
+			var vowel = window.FlashCards.randomOneFrom(approVowels);
 			if (vowel == this.SHADDAH) {
-				vowel += randomOneFrom(removeFrom(approVowels, [this.SHADDAH, this.SUKOON]));
+				vowel += window.FlashCards.randomOneFrom(window.FlashCards.removeFrom(approVowels, [this.SHADDAH, this.SUKOON]));
 			}
 			return vowel;
 		},
@@ -80,9 +80,9 @@
 			if (isLast) {
 				approLetters = this.letters;
 			} else {
-				approLetters = removeFrom(this.letters, [this.TAA_MARBOOTHAH, this.ALIF_MAKSOOR]);
+				approLetters = window.FlashCards.removeFrom(this.letters, [this.TAA_MARBOOTHAH, this.ALIF_MAKSOOR]);
 			}
-			return randomOneFrom(approLetters);
+			return window.FlashCards.randomOneFrom(approLetters);
 		}, 
 		
 		getNewArabic : function() {
@@ -102,7 +102,7 @@
 		}
 	});
 
-	window.registerCardSet("arabicLetters", new ArabicLetters());
+	window.FlashCards.registerCardSet("arabicLetters", new ArabicLetters());
 
 	
 	$("#options #numLetters").change(function(e) {
