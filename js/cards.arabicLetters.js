@@ -6,14 +6,18 @@
 		this.letters = [ this.ALIF, this.BAA, this.TAA, this.THAA, this.JEEM, this.HAA, this.KHAA, this.DAAL,this.ZHAAL,   
 				            this.RAA, this.ZAA, this.SEEN, this.SHEEN, this.SAAD, this.DHAAD, this.TOY, this.DHOY, 
 				            this.AYN, this.GHAYN, this.FAA, this.QAAF, this.KAAF, this.LAAM, this.MIM, this.NOON, this.HA, 
-				            this.WOW, this.TAA_MARBOOTHAH, this.ALIF_MAKSOOR, this.YA];
-		this.vowels = [this.FATHATAAN, this.KASRATAAN, this.DAMMATAAN, this.FATHA, this.KASRA, this.DAMMA, this.SHADDAH, this.SUKOON];
+				            this.WOW, this.YA, this.TAA_MARBOOTHAH, this.ALIF_MAKSOOR];
+		this.vowels = [this.FATHATAAN, this.DAMMATAAN, this.KASRATAAN, this.FATHA, this.DAMMA, this.KASRA, this.SHADDAH, this.SUKOON];
+		this.transliterations = ["`", "b", "t", "th", "j", "H", "KH", "d", "zh",
+		                        "r", "z", "s", "sh", "S", "D", "T", "ZH", 
+		                        "'", "gh", "f", "Q", "K", "l", "m", "n", "h",
+		                        "w", "y", "t", "`",
+		                        "an", "un", "in", "a", "u", "i", "_", ""];
 	}
 
 	$.extend(ArabicLetters.prototype, {
 		ALIF : '\u0627',
 		BAA : '\u0628',
-		TAA_MARBOOTHAH : '\u0629',
 		TAA : '\u062A',
 		THAA : '\u062B',
 		JEEM : '\u062C',
@@ -39,15 +43,16 @@
 		NOON : '\u0646',
 		HA : '\u0647',
 		WOW : '\u0648',
-		ALIF_MAKSOOR : '\u0649',
 		YA : '\u064A',
+		TAA_MARBOOTHAH : '\u0629',
+		ALIF_MAKSOOR : '\u0649',
 
 		FATHATAAN : '\u064B',
-		KASRATAAN : '\u064C',
-		DAMMATAAN : '\u064D',
+		DAMMATAAN : '\u064C',
+		KASRATAAN : '\u064D',
 		FATHA : '\u064E',
-		KASRA : '\u064F',
-		DAMMA : '\u0650',
+		DAMMA : '\u064F',
+		KASRA : '\u0650',
 		SHADDAH : '\u0651',
 		SUKOON : '\u0652',
 
@@ -56,7 +61,25 @@
 		},
 		
 		getTranscription : function(arabic) {
-			return "[answer goes here]";
+			return this.transliteration;
+		},
+		
+		translitLetter : function(letter) {
+			var i = this.letters.indexOf(letter);
+			if (i > -1) {
+				return this.transliterations[i];
+			} else {
+				return "";
+			}
+		},
+		
+		translitVowel : function(vowel) {
+			var i = this.vowels.indexOf(vowel);
+			if (i > -1) {
+				return this.transliterations[i+30];
+			} else {
+				return "";
+			}
 		},
 
 		generateVowel : function(isFirst, isLast, letter) {
@@ -91,7 +114,9 @@
 				var isFirst = i == 0;
 				var isLast = i+1 == numLetters;
 				var letter = this.generateLetter(isFirst, isLast);
-				text += letter + this.generateVowel( isFirst, isLast, letter );
+				var vowel = this.generateVowel(isFirst, isLast, letter);
+				this.transliteration = this.translitLetter(letter)+this.translitVowel(vowel);
+				text += letter + vowel;
 			}
 			return text;
 		},
@@ -104,10 +129,10 @@
 
 	window.FlashCards.registerCardSet("arabicLetters", new ArabicLetters());
 
-	
+/*	
 	$("#options #numLetters").change(function(e) {
 		numLetters = $("#options #numLetters option:selected").val();
 	});
-	
+*/	
 	
 }(window, jQuery));
