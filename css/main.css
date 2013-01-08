@@ -94,7 +94,10 @@ textarea {
    ========================================================================== */
 
 
-
+@import url(http://fonts.googleapis.com/earlyaccess/amiri.css); /* 'Amiri', sans */
+@import url(http://fonts.googleapis.com/earlyaccess/droidarabicnaskh.css); /* 'Droid Arabic Naskh', sans */
+@import url(http://fonts.googleapis.com/earlyaccess/lateef.css); /*  'Lateef', serif */
+@import url(http://fonts.googleapis.com/earlyaccess/thabit.css);  /*  'Thabit', serif */
 
 
 #options, #workarea {

@@ -1,138 +1,178 @@
 (function(window, $) {
-
-	var numLetters = 1;
-	
-	function ArabicLetters() {
-		this.letters = [ this.ALIF, this.BAA, this.TAA, this.THAA, this.JEEM, this.HAA, this.KHAA, this.DAAL,this.ZHAAL,   
-				            this.RAA, this.ZAA, this.SEEN, this.SHEEN, this.SAAD, this.DHAAD, this.TOY, this.DHOY, 
-				            this.AYN, this.GHAYN, this.FAA, this.QAAF, this.KAAF, this.LAAM, this.MIM, this.NOON, this.HA, 
-				            this.WOW, this.YA, this.TAA_MARBOOTHAH, this.ALIF_MAKSOOR];
-		this.vowels = [this.FATHATAAN, this.DAMMATAAN, this.KASRATAAN, this.FATHA, this.DAMMA, this.KASRA, this.SHADDAH, this.SUKOON];
-		this.transliterations = ["`", "b", "t", "th", "j", "H", "KH", "d", "zh",
-		                        "r", "z", "s", "sh", "S", "D", "T", "ZH", 
-		                        "'", "gh", "f", "Q", "K", "l", "m", "n", "h",
-		                        "w", "y", "t", "`",
-		                        "an", "un", "in", "a", "u", "i", "_", ""];
-	}
-
-	$.extend(ArabicLetters.prototype, {
-		ALIF : '\u0627',
-		BAA : '\u0628',
-		TAA : '\u062A',
-		THAA : '\u062B',
-		JEEM : '\u062C',
-		HAA : '\u062D',
-		KHAA : '\u062E',
-		DAAL : '\u062F',
-		ZHAAL : '\u0630',
-		RAA : '\u0631',
-		ZAA : '\u0632',
-		SEEN : '\u0633',
-		SHEEN : '\u0634',
-		SAAD : '\u0635',
-		DHAAD : '\u0636',
-		TOY : '\u0637',
-		DHOY : '\u0638',
-		AYN : '\u0639',
-		GHAYN : '\u063A',
-		FAA : '\u0641',
-		QAAF : '\u0642',
-		KAAF : '\u0643',
-		LAAM : '\u0644',
-		MIM : '\u0645',
-		NOON : '\u0646',
-		HA : '\u0647',
-		WOW : '\u0648',
-		YA : '\u064A',
-		TAA_MARBOOTHAH : '\u0629',
-		ALIF_MAKSOOR : '\u0649',
-
-		FATHATAAN : '\u064B',
-		DAMMATAAN : '\u064C',
-		KASRATAAN : '\u064D',
-		FATHA : '\u064E',
-		DAMMA : '\u064F',
-		KASRA : '\u0650',
-		SHADDAH : '\u0651',
-		SUKOON : '\u0652',
-
-		setOptions: function(options) {
-			
-		},
-		
-		getTranscription : function(arabic) {
-			return this.transliteration;
-		},
-		
-		translitLetter : function(letter) {
-			var i = this.letters.indexOf(letter);
-			if (i > -1) {
-				return this.transliterations[i];
-			} else {
-				return "";
-			}
-		},
-		
-		translitVowel : function(vowel) {
-			var i = this.vowels.indexOf(vowel);
-			if (i > -1) {
-				return this.transliterations[i+30];
-			} else {
-				return "";
-			}
-		},
-
-		generateVowel : function(isFirst, isLast, letter) {
-			var approVowels;
-			if (isFirst) {
-				approVowels = [this.FATHA, this.KASRA, this.DAMMA];
-			} else if (isLast) {
-				approVowels = window.FlashCards.removeFrom(this.vowels, this.SUKOON);
-			} else {
-				approVowels = window.FlashCards.removeFrom(this.vowels, [this.FATHATAAN, this.KASRATAAN, this.DAMMATAAN]);
-			}
-			var vowel = window.FlashCards.randomOneFrom(approVowels);
-			if (vowel == this.SHADDAH) {
-				vowel += window.FlashCards.randomOneFrom(window.FlashCards.removeFrom(approVowels, [this.SHADDAH, this.SUKOON]));
-			}
-			return vowel;
-		},
-		
-		generateLetter : function(isFirst, isLast) {
-			var approLetters;
-			if (isLast) {
-				approLetters = this.letters;
-			} else {
-				approLetters = window.FlashCards.removeFrom(this.letters, [this.TAA_MARBOOTHAH, this.ALIF_MAKSOOR]);
-			}
-			return window.FlashCards.randomOneFrom(approLetters);
-		}, 
-		
-		getNewArabic : function() {
-			var text = "";
-			for (var i = 0; i < numLetters; i++) {
-				var isFirst = i == 0;
-				var isLast = i+1 == numLetters;
-				var letter = this.generateLetter(isFirst, isLast);
-				var vowel = this.generateVowel(isFirst, isLast, letter);
-				this.transliteration = this.translitLetter(letter)+this.translitVowel(vowel);
-				text += letter + vowel;
-			}
-			return text;
-		},
-
-		getQuestionAnswer : function() {
-			var arabic = this.getNewArabic();
-			return { "question":arabic, "answer":this.getTranscription(arabic) };
-		}
-	});
-
-	window.FlashCards.registerCardSet("arabicLetters", new ArabicLetters());
-
-/*	
-	$("#options #numLetters").change(function(e) {
-		numLetters = $("#options #numLetters option:selected").val();
-	});
-*/	
-	
+	window.FlashCards.registerCardSet('arabicLetters', new StaticCards({
+		"بً" : "ban",
+		"بٌ" : "bun",
+		"بٍ" : "bin",
+		"بَ" : "ba",
+		"بُ" : "bu",
+		"بِ" : "bi",
+		"تً" : "tan",
+		"تٌ" : "tun",
+		"تٍ" : "tin",
+		"تَ" : "ta",
+		"تُ" : "tu",
+		"تِ" : "ti",
+		"ثً" : "than",
+		"ثٌ" : "thun",
+		"ثٍ" : "thin",
+		"ثَ" : "tha",
+		"ثُ" : "thu",
+		"ثِ" : "thi",
+		"جً" : "jan",
+		"جٌ" : "jun",
+		"جٍ" : "jin",
+		"جَ" : "ja",
+		"جُ" : "ju",
+		"جِ" : "ji",
+		"حً" : "Han",
+		"حٌ" : "Hun",
+		"حٍ" : "Hin",
+		"حَ" : "Ha",
+		"حُ" : "Hu",
+		"حِ" : "Hi",
+		"خً" : "KHan",
+		"خٌ" : "KHun",
+		"خٍ" : "KHin",
+		"خَ" : "KHa",
+		"خُ" : "KHu",
+		"خِ" : "KHi",
+		"دً" : "dan",
+		"دٌ" : "dun",
+		"دٍ" : "din",
+		"دَ" : "da",
+		"دُ" : "du",
+		"دِ" : "di",
+		"ذً" : "zhan",
+		"ذٌ" : "zhun",
+		"ذٍ" : "zhin",
+		"ذَ" : "zha",
+		"ذُ" : "zhu",
+		"ذِ" : "zhi",
+		"رً" : "ran",
+		"رٌ" : "run",
+		"رٍ" : "rin",
+		"رَ" : "ra",
+		"رُ" : "ru",
+		"رِ" : "ri",
+		"زً" : "zan",
+		"زٌ" : "zun",
+		"زٍ" : "zin",
+		"زَ" : "za",
+		"زُ" : "zu",
+		"زِ" : "zi",
+		"سً" : "san",
+		"سٌ" : "sun",
+		"سٍ" : "sin",
+		"سَ" : "sa",
+		"سُ" : "su",
+		"سِ" : "si",
+		"شً" : "shan",
+		"شٌ" : "shun",
+		"شٍ" : "shin",
+		"شَ" : "sha",
+		"شُ" : "shu",
+		"شِ" : "shi",
+		"صً" : "San",
+		"صٌ" : "Sun",
+		"صٍ" : "Sin",
+		"صَ" : "Sa",
+		"صُ" : "Su",
+		"صِ" : "Si",
+		"ضً" : "Dan",
+		"ضٌ" : "Dun",
+		"ضٍ" : "Din",
+		"ضَ" : "Da",
+		"ضُ" : "Du",
+		"ضِ" : "Di",
+		"طً" : "Tan",
+		"طٌ" : "Tun",
+		"طٍ" : "Tin",
+		"طَ" : "Ta",
+		"طُ" : "Tu",
+		"طِ" : "Ti",
+		"ظً" : "ZHan",
+		"ظٌ" : "ZHun",
+		"ظٍ" : "ZHin",
+		"ظَ" : "ZHa",
+		"ظُ" : "ZHu",
+		"ظِ" : "ZHi",
+		"عً" : "'an",
+		"عٌ" : "'un",
+		"عٍ" : "'in",
+		"عَ" : "'a",
+		"عُ" : "'u",
+		"عِ" : "'i",
+		"غً" : "ghan",
+		"غٌ" : "ghun",
+		"غٍ" : "ghin",
+		"غَ" : "gha",
+		"غُ" : "ghu",
+		"غِ" : "ghi",
+		"فً" : "fan",
+		"فٌ" : "fun",
+		"فٍ" : "fin",
+		"فَ" : "fa",
+		"فُ" : "fu",
+		"فِ" : "fi",
+		"قً" : "Qan",
+		"قٌ" : "Qun",
+		"قٍ" : "Qin",
+		"قَ" : "Qa",
+		"قُ" : "Qu",
+		"قِ" : "Qi",
+		"كً" : "Kan",
+		"كٌ" : "Kun",
+		"كٍ" : "Kin",
+		"كَ" : "Ka",
+		"كُ" : "Ku",
+		"كِ" : "Ki",
+		"لً" : "lan",
+		"لٌ" : "lun",
+		"لٍ" : "lin",
+		"لَ" : "la",
+		"لُ" : "lu",
+		"لِ" : "li",
+		"مً" : "man",
+		"مٌ" : "mun",
+		"مٍ" : "min",
+		"مَ" : "ma",
+		"مُ" : "mu",
+		"مِ" : "mi",
+		"نً" : "nan",
+		"نٌ" : "nun",
+		"نٍ" : "nin",
+		"نَ" : "na",
+		"نُ" : "nu",
+		"نِ" : "ni",
+		"هً" : "han",
+		"هٌ" : "hun",
+		"هٍ" : "hin",
+		"هَ" : "ha",
+		"هُ" : "hu",
+		"هِ" : "hi",
+		"وً" : "wan",
+		"وٌ" : "wun",
+		"وٍ" : "win",
+		"وَ" : "wa",
+		"وُ" : "wu",
+		"وِ" : "wi",
+		"يً" : "yan",
+		"يٌ" : "yun",
+		"يٍ" : "yin",
+		"يَ" : "ya",
+		"يُ" : "yu",
+		"يِ" : "yi",
+		"ةً" : "tan",
+		"ةٌ" : "tun",
+		"ةٍ" : "tin",
+		"ةَ" : "ta",
+		"ةُ" : "tu",
+		"ةِ" : "ti",
+		"أً" : "`an",
+		"أٌ" : "`un",
+		"إٍ" : "`in",
+		"أَ" : "`a",
+		"أُ" : "`u",
+		"إِ" : "`i",
+	}));
 }(window, jQuery));
