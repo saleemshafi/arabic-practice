@@ -23,7 +23,10 @@
 		registerCardSet : function(name, cards) {
 				this.cardsets[name] = cards;
 				$("#cardset").append($("<option>", { value : name })
-						.text(name)); 	
+						.text(name));
+				if (this.cardSet == undefined) {
+					this.selectCardSet(name);
+				}
 			},
 			
 		selectCardSet : function (name) {
@@ -59,13 +62,7 @@
 	});
 
 	
-	FlashCards.registerCardSet("sample", new StaticCards({
-		"wahid": "one",
-		"ithnaan": "two",
-		"thalaatha": "three",
-		"arba3a": "four"
-	}));
-	FlashCards.selectCardSet("sample");
+//	FlashCards.selectCardSet("sample");
 	
 	$("#workarea .nextBtn").click( FlashCards.getNextCard.bind(FlashCards) );
 	
